@@ -1,0 +1,191 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: x001-twentytwentyfive\n"
+"POT-Creation-Date: 2025-05-30 12:14-0700\n"
+"PO-Revision-Date: 2025-06-07 13:06-0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.6\n"
+
+#. Description of the theme
+#: style.css
+msgid "A customized theme based on Twenty Twenty-Five providing eXtra Header-footer and Body Layout. Template No. 001."
+msgstr "基于二〇二五主题修改，扩充设计了自定义的页眉页脚及主体布局(eXtra Header-footer and Body Layout)，模板编号：001。"
+
+#. Theme Name of the theme
+#: style.css
+msgid "eXtra Header-footer and Body Layout 001 (2025)"
+msgstr "扩充页眉页脚及主体布局 001 (2025)"
+
+#: xshortcodes.php
+msgid "Username: "
+msgstr "用户名："
+
+msgid "Password: "
+msgstr "密　码："
+
+msgid "Remember me"
+msgstr "记住我"
+
+msgid "Current User"
+msgstr "当前用户"
+
+#: xadmin.php
+msgid "Global Styles Editor"
+msgstr "全局样式编辑器"
+
+msgid "Global-Styles"
+msgstr "全局样式"
+
+msgid "Global styles saved."
+msgstr "全局样式已保存。"
+
+msgid "Confirm saving?"
+msgstr "确认保存？"
+
+msgid "Edit wp-global-styles"
+msgstr "编辑 wp-global-styles"
+
+msgid "Import/Export Theme Data"
+msgstr "导入/导出主题数据"
+
+msgid "Import/Export"
+msgstr "导入/导出"
+
+msgid "Import/Export Current Theme Data"
+msgstr "导入/导出当前主题数据"
+
+msgid "Export or Import current theme's modified data stored in database, including global styles, templates, template parts, related patterns and navigation menus."
+msgstr "导出或导入当前主题存储在数据库中的修改数据，包括全局样式、模板、模板部件、相关联的区块样板和导航菜单。"
+
+msgid "Export Data as JSON"
+msgstr "导出为JSON数据"
+
+msgid "Select JSON file to import:"
+msgstr "选择要导入的JSON文件："
+
+msgid "Import Data from JSON"
+msgstr "从JSON导入数据"
+
+msgid "Unauthorized."
+msgstr "未经授权。"
+
+msgid "Invalid JSON file."
+msgstr "无效的JSON文件。"
+
+msgid "Import \"%s\" does not match current theme \"%s\"."
+msgstr "导入的主题 \"%s\" 与当前主题 \"%s\" 不匹配。"
+
+msgid "Import completed successfully."
+msgstr "导入成功完成。"
+
+#: xadmin_urlchk.php
+msgid "Absolute/Relative URL Checker"
+msgstr "绝对/相对URL检查"
+
+msgid "URL Checker"
+msgstr "URL检查"
+
+msgid "Check Absolute URLs"
+msgstr "检查绝对URL"
+
+msgid "Absolute URLs"
+msgstr "绝对URL"
+
+msgid "Check Relative URLs"
+msgstr "检查相对URL"
+
+msgid "Relative URLs"
+msgstr "相对URL"
+
+msgid "Check GUIDs"
+msgstr "检查GUID"
+
+msgid "Overview"
+msgstr "概览"
+
+msgid "Tools for checking and converting URL paths in post_content."
+msgstr "用于检查和转换post_content中URL路径的工具。"
+
+msgid "Check and convert absolute URLs used to reference site resources in post_content."
+msgstr "检查和转换post_content中用于引用站点资源的绝对URL。"
+
+msgid "Example:"
+msgstr "示例："
+
+msgid "converts to"
+msgstr "转换为"
+
+msgid "Check and restore relative URLs used to reference site resources in post_content."
+msgstr "检查和恢复post_content中用于引用站点资源的相对URL。"
+
+msgid "Check and fix post GUIDs to match current site domain."
+msgstr "检查和修复post GUID以匹配当前站点域名。"
+
+msgid "Confirm to convert all absolute URLs to relative URLs?"
+msgstr "确认将所有绝对URL转换为相对URL？"
+
+msgid "Convert All to Relative URLs"
+msgstr "全部转换为相对URL"
+
+msgid "Note: Absolute/Relative URL convertion is based on home_url"
+msgstr "注意：绝对/相对URL的转换是基于home_url"
+
+msgid "Found %d posts with absolute URLs. "
+msgstr "找到 %d 篇内容包含绝对URL。"
+
+msgid "Preview matches found"
+msgstr "匹配结果预览"
+
+msgid "No absolute URLs found."
+msgstr "未找到绝对URL。"
+
+msgid "All absolute URLs in post_content were successfully converted to relative URLs!"
+msgstr "内容中的所有绝对URL已成功转换为相对URL！"
+
+msgid "Confirm to restore all relative URLs to absolute URLs?"
+msgstr "确认将所有相对URL恢复为绝对URL？"
+
+msgid "Restore All to Absolute URLs"
+msgstr "全部恢复为绝对URL"
+
+msgid "Found %d posts with relative URLs."
+msgstr "找到 %d 篇内容包含相对URL。"
+
+msgid "No relative URLs found."
+msgstr "未找到相对URL。"
+
+msgid "All relative URLs in post_content were successfully restored to absolute URLs!"
+msgstr "内容中的所有相对URL已成功恢复为绝对URL！"
+
+msgid "Permission denied"
+msgstr "权限不足"
+
+msgid "All GUIDs were fixed successfully!"
+msgstr "所有GUID已成功修复！"
+
+msgid "Found %d GUIDs with mismatched domains."
+msgstr "找到 %d 项GUID包含不匹配的域名。"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Old GUID"
+msgstr "原GUID"
+
+msgid "New GUID"
+msgstr "新GUID"
+
+msgid "Confirm to fix all GUIDs?"
+msgstr "确认修复所有GUID？"
+
+msgid "Fix GUIDs Now"
+msgstr "立即修复GUID"
+
+msgid "All GUIDs match current domain."
+msgstr "所有GUID都匹配当前域名。"

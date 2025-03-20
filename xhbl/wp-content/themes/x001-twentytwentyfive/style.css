@@ -1,0 +1,31 @@
+/*
+Theme Name: eXtra Header-footer and Body Layout 001 (2025)
+Theme URI: https://wordpress.org/themes/twentytwentyfive/
+Description: A customized theme based on Twenty Twenty-Five providing eXtra Header-footer and Body Layout. Template No. 001.
+Author: xhbl
+Author URI: https://wordpress.org
+Template: twentytwentyfive
+Version: 1.1
+Text Domain: xhbl
+*/
+
+/* Body background can be set using Theme Editor Styles
+body {
+    background-image: url("assets/images/xhbl_background.png");
+    background-position: top left;
+    background-size: auto;
+    background-repeat: repeat;
+} */
+
+/* PostCell Pattern columns stack size*/
+@media (min-width: 602px) {
+    .xhbl_postcell1_columns {
+        flex-wrap: nowrap !important;
+    }
+}
+
+/* Single post meta data row wrap gap */
+.xhbl-post-meta-row {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
