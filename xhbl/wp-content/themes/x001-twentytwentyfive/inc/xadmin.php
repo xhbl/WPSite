@@ -225,11 +225,11 @@ function theme_export_block_theme_data() {
     }
 
     // 导出被引用的 wp_block
-    $referenced_block_ids = array_unique($referenced_block_ids);
+    $referenced_block_ids = array_values(array_unique(array_merge($referenced_block_ids, get_xhbl_theme_block_ids())));
     $data['wp_block'] = get_export_posts_by_ids('wp_block', $referenced_block_ids);
 
     // 导出被引用的 wp_navigation
-    $referenced_navigation_ids = array_unique($referenced_navigation_ids);
+    $referenced_navigation_ids = array_values(array_unique(array_merge($referenced_navigation_ids, get_xhbl_theme_navigation_ids())));
     $data['wp_navigation'] = get_export_posts_by_ids('wp_navigation', $referenced_navigation_ids);
 
     $all_term_ids = array_unique($all_term_ids);
@@ -264,6 +264,7 @@ function theme_export_block_theme_data() {
     exit;
 }
 
+// 获得id列表指定类型的导出内容
 function get_export_posts_by_ids($post_type, $ids) {
     global $wpdb;
     $result = [];
@@ -292,6 +293,52 @@ function get_export_posts_by_ids($post_type, $ids) {
         $result[] = $item;
     }
     return $result;
+}
+
+// 获得主题相关的wp_block的id列表
+function get_xhbl_theme_block_ids() {
+    $theme_block_namelist = ['xhbl_postcell1', 'xhbl_postcell2'];
+    global $wpdb;
+    $slug_placeholders = implode(',', array_fill(0, count($theme_block_namelist), '%s'));
+    $post_statuses = ['publish'];
+    $status_placeholders = implode(',', array_fill(0, count($post_statuses), '%s'));
+    $sql = "
+        SELECT ID
+        FROM {$wpdb->posts}
+        WHERE post_type = 'wp_block'
+          AND post_name IN ($slug_placeholders)
+          AND post_status IN ($status_placeholders)
+    ";
+    $prepare_params = array_merge($theme_block_namelist, $post_statuses);
+    $results = $wpdb->get_results($wpdb->prepare($sql, ...$prepare_params));
+    $id_list = [];
+    foreach ($results as $row) {
+        $id_list[] = (int) $row->ID;
+    }
+    return $id_list;
+}
+
+// 获得主题相关的wp_navigation的id列表
+function get_xhbl_theme_navigation_ids() {
+    $theme_navigation_namelist = ['xhbl_navicon', 'xhbl_navmenu'];
+    global $wpdb;
+    $slug_placeholders = implode(',', array_fill(0, count($theme_navigation_namelist), '%s'));
+    $post_statuses = ['publish'];
+    $status_placeholders = implode(',', array_fill(0, count($post_statuses), '%s'));
+    $sql = "
+        SELECT ID
+        FROM {$wpdb->posts}
+        WHERE post_type = 'wp_navigation'
+          AND post_name IN ($slug_placeholders)
+          AND post_status IN ($status_placeholders)
+    ";
+    $prepare_params = array_merge($theme_navigation_namelist, $post_statuses);
+    $results = $wpdb->get_results($wpdb->prepare($sql, ...$prepare_params));
+    $id_list = [];
+    foreach ($results as $row) {
+        $id_list[] = (int) $row->ID;
+    }
+    return $id_list;
 }
 
 // 导入处理函数
@@ -324,27 +371,30 @@ function theme_import_block_theme_data($json_path) {
         update_option("theme_mods_{$current_theme}", $theme_mods);
     }
 
-    // 4a. 恢复可重用块 (wp_block) - 先删后插
+    // 4a. 恢复可重用块 (wp_block)
     $block_mapping = [];
     if (!empty($import_data['wp_block'])) {
         foreach ($import_data['wp_block'] as $block) {
-            // 删除同名旧记录（包括修订版）
-            $existing = $wpdb->get_col($wpdb->prepare(
-                "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'wp_block' AND post_name = %s",
+            // 查询是否存在同名 wp_block（只取主版本）
+            $existing_id = $wpdb->get_var($wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'wp_block' AND post_name = %s AND post_status IN ('publish', 'draft', 'private') LIMIT 1",
                 $block['post_name']
             ));
-            // 彻除原记录
-            foreach ($existing as $post_id) {
-                wp_delete_post($post_id, true);
-            }
-            // 插入新记录
-            $new_id = wp_insert_post([
+            $post_data = [
                 'post_title'   => $block['post_title'],
                 'post_name'    => $block['post_name'],
-                'post_content' => wp_slash( $block['post_content'] ),
+                'post_content' => wp_slash($block['post_content']),
                 'post_status'  => $block['post_status'],
-                'post_type'    => 'wp_block'
-            ]);
+                'post_type'    => 'wp_block',
+                'edit_date'    => true, // 避免 revision
+            ];
+            // 更新或插入
+            if ($existing_id) {
+                $post_data['ID'] = $existing_id;
+                $new_id = wp_insert_post($post_data); // 更新，不产生 revision
+            } else {
+                $new_id = wp_insert_post($post_data); // 插入新记录
+            }
             // 更新元数据
             if (!empty($block['meta'])) {
                 foreach ($block['meta'] as $meta_key => $meta_values) {
@@ -359,20 +409,24 @@ function theme_import_block_theme_data($json_path) {
     $navigation_mapping = [];
     if (!empty($import_data['wp_navigation'])) {
         foreach ($import_data['wp_navigation'] as $nav) {
-            $existing = $wpdb->get_col($wpdb->prepare(
-                "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'wp_navigation' AND post_name = %s",
+            $existing_id = $wpdb->get_var($wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'wp_navigation' AND post_name = %s AND post_status IN ('publish', 'draft', 'private') LIMIT 1",
                 $nav['post_name']
             ));
-            foreach ($existing as $post_id) {
-                wp_delete_post($post_id, true);
-            }
-            $new_id = wp_insert_post([
+            $post_data = [
                 'post_title'   => $nav['post_title'],
                 'post_name'    => $nav['post_name'],
-                'post_content' => wp_slash( $nav['post_content'] ),
+                'post_content' => wp_slash($nav['post_content']),
                 'post_status'  => $nav['post_status'],
-                'post_type'    => 'wp_navigation'
-            ]);
+                'post_type'    => 'wp_navigation',
+                'edit_date'    => true,
+            ];
+            if ($existing_id) {
+                $post_data['ID'] = $existing_id;
+                $new_id = wp_insert_post($post_data);
+            } else {
+                $new_id = wp_insert_post($post_data);
+            }
             if (!empty($nav['meta'])) {
                 foreach ($nav['meta'] as $meta_key => $meta_values) {
                     update_post_meta($new_id, $meta_key, maybe_unserialize($meta_values[0]));
@@ -402,24 +456,18 @@ function theme_import_block_theme_data($json_path) {
         if (empty($import_data[$type])) continue;
 
         foreach ($import_data[$type] as $post) {
-            // 删除当前主题下的同名旧记录
+            // 检查并获取已有旧记录 ID（当前主题下同名）
+            $existing_id = null;
             if ($current_theme_tax_id) {
-                $to_delete = $wpdb->get_col($wpdb->prepare(
+                $existing_id = $wpdb->get_var($wpdb->prepare(
                     "SELECT p.ID FROM {$wpdb->posts} p
                      INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
-                     WHERE p.post_type = %s
-                       AND p.post_name = %s
-                       AND tr.term_taxonomy_id = %d",
+                     WHERE p.post_type = %s AND p.post_name = %s AND tr.term_taxonomy_id = %d
+                     LIMIT 1",
                     $type,
                     $post['post_name'],
                     $current_theme_tax_id
                 ));
-
-                if (!empty($to_delete)) {
-                    foreach ($to_delete as $post_id) {
-                        wp_delete_post($post_id, true);
-                    }
-                }
             }
             // 预处理post_content，更新ref id
             if (!empty($post['post_content'])) {
@@ -450,14 +498,17 @@ function theme_import_block_theme_data($json_path) {
                     $post['post_content']
                 );
             }
-            // 插入新记录
-            $new_id = wp_insert_post([
+            // 如果已有旧记录，指定 ID 更新
+            $post_data = [
                 'post_title'   => $post['post_title'],
                 'post_name'    => $post['post_name'],
-                'post_content' => wp_slash( $post['post_content'] ),
+                'post_content' => wp_slash($post['post_content']),
                 'post_status'  => $post['post_status'],
-                'post_type'    => $type
-            ]);
+                'post_type'    => $type,
+                'edit_date'    => true, // 避免产生修订
+            ];
+            if ($existing_id) $post_data['ID'] = $existing_id;
+            $new_id = wp_insert_post($post_data);
             // 更新元数据
             if (!empty($post['meta'])) {
                 foreach ($post['meta'] as $meta_key => $meta_values) {

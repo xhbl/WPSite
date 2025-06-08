@@ -1,0 +1,71 @@
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"0"},"padding":{"right":"12px","left":"12px"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="margin-top:0;padding-right:12px;padding-left:12px"><!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide"><!-- wp:query-title {"type":"search","showSearchTerm":false,"align":"wide","style":{"spacing":{"margin":{"top":"30px","bottom":"30px"}},"typography":{"fontStyle":"normal","fontWeight":"600"}}} /-->
+
+<!-- wp:separator {"align":"wide","className":"is-style-default","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|30"}}}} -->
+<hr class="wp-block-separator alignwide has-alpha-channel-opacity is-style-default" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--30)"/>
+<!-- /wp:separator --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"0px"} -->
+<div style="height:0px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide"><!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"tagName":"main","align":"wide","layout":{"contentSize":null,"type":"constrained"}} -->
+<main class="wp-block-query alignwide"><!-- wp:post-template {"align":"wide","layout":{"type":"default"}} -->
+<!-- wp:group {"layout":{"inherit":true,"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:post-title {"isLink":true,"align":"wide","style":{"typography":{"fontStyle":"normal","fontWeight":"600"}}} /-->
+
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide"><!-- wp:column {"width":"900px"} -->
+<div class="wp-block-column" style="flex-basis:900px"><!-- wp:post-excerpt {"excerptLength":100} /-->
+
+<!-- wp:post-date {"format":"Y-m-d","isLink":true,"style":{"typography":{"fontStyle":"italic","fontWeight":"400"}},"fontSize":"small"} /--></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"width":""} -->
+<div class="wp-block-column"></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:spacer {"height":"1px"} -->
+<div style="height:1px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></div>
+<!-- /wp:group -->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results {"align":"wide"} -->
+<!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no results."} -->
+<p>未找到需要搜索的内容。</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results -->
+
+<!-- wp:query-pagination {"align":"wide","layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous {"label":"上一页","fontSize":"small"} /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next {"label":"下一页","fontSize":"small"} /-->
+<!-- /wp:query-pagination --></main>
+<!-- /wp:query --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"main","align":"wide","style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group alignwide" style="margin-top:0;margin-bottom:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+<div style="height:var(--wp--preset--spacing--20)" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search","buttonUseIcon":true,"align":"center"} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"200px"} -->
+<div style="height:200px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></main>
+<!-- /wp:group --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
