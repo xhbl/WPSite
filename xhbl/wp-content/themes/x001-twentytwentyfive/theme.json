@@ -86,7 +86,7 @@
 					"slug": "contrast"
 				},
 				{
-					"color": "#235A81",
+					"color": "#015785",
 					"name": "Accent 1",
 					"slug": "accent-1"
 				},
@@ -96,7 +96,7 @@
 					"slug": "accent-2"
 				},
 				{
-					"color": "#DD7703",
+					"color": "#2296D5",
 					"name": "Accent 3",
 					"slug": "accent-3"
 				},
@@ -106,7 +106,7 @@
 					"slug": "accent-4"
 				},
 				{
-					"color": "#E8E8E8",
+					"color": "#ABDCF5",
 					"name": "Accent 5",
 					"slug": "accent-5"
 				},
